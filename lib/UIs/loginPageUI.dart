@@ -75,7 +75,6 @@ class LoginPage extends ConsumerWidget {
                   }),
             ],
           ),
-        ],
-        floatingActionButton: testDataMenuSpeedDial(ref, context));
+        ],);
   }
 }

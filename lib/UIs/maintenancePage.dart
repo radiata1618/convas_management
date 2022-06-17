@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../common/UI/commonButtonUI.dart';
 import '../../common/UI/commonOthersUI.dart';
+import '../developerLogic/insertTestMastersData.dart';
+import '../developerLogic/maintenanceMasterData.dart';
 import 'loginProvider.dart';
 
 class MaintenancePage extends ConsumerWidget {
@@ -19,13 +21,39 @@ class MaintenancePage extends ConsumerWidget {
         [
           Column(
             children: <Widget>[
+              deleteButton("masters", context),
               commonVerticalGap(),
               commonButtonSecondaryColorRound(
-                  text: "Reflesh master data",
+                  text: "Insert masters data",
                   onPressed: () async {
+                    await insertTestMasterData(ref);
+                    commonShowOkInfoDialog(context, "Information", "Your request has been done!");
                   }),
+
+              commonVerticalGap(),
+              deleteButton("appointments", context),
+              deleteButton("chatDetails", context),
+              deleteButton("chatHeaders", context),
+              deleteButton("events", context),
+              deleteButton("friends", context),
+              deleteButton("inquiries", context),
+              deleteButton("requests", context),
+              deleteButton("users", context),
             ],
           ),
         ],);
   }
+}
+
+Widget deleteButton(String collectionName,BuildContext context){
+  return
+    Column(children:[
+      commonVerticalGap(),
+      commonButtonSecondaryColorRound(
+          text: "Physically delete "+collectionName+" data",
+          onPressed: () async {
+            await physicalDeleteFirebaseData(collectionName);
+            commonShowOkInfoDialog(context, "Information", "Your request has been done!");
+          }),
+    ]);
 }
